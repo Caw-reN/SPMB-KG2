@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Lexend', sans-serif;
+    color: #2f3146;
+    background-color: #ffffff;
+  }
+}
+
+/* Custom Select Arrow - Exact match to PHP Native */
+.form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  -webkit-print-color-adjust: exact;
+  appearance: none;
+}
+
+/* Social link hover color */
+.social-link:hover {
+  color: #5756a2;
+}
+
+/* Custom Scrollbar for Admin Panel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #005f3b; 
+}
+
+/* Sidebar Active State */
+.active-nav {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #28a745;
+}
+
+/* Transisi Halus untuk Card */
+.card-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Print CSS */
+@media print {
+  aside, header, .no-print {
+    display: none !important;
+  }
+  .print-area {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}
