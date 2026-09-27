@@ -28,8 +28,31 @@ class Pengaturan extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            Cache::forget('pengaturan_terbaru');
+        });
+
+        static::deleted(function () {
+            Cache::forget('pengaturan_terbaru');
+        });
+    }
+
     public static function getSettings()
     {
-        return self::orderBy('id', 'desc')->first();
+        $cached = Cache::remember('pengaturan_terbaru', now()->addDay(), function () {
+            $model = self::orderBy('id', 'desc')->first();
+            return $model ? $model->getAttributes() : null;
+        });
+
+        if ($cached === null) {
+            return null;
+        }
+
+        $instance = new self();
+        $instance->setRawAttributes($cached, true);
+        $instance->exists = true;
+        return $instance;
     }
 }

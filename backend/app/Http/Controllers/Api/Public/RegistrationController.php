@@ -9,6 +9,7 @@ use App\Models\Pendaftar;
 use App\Models\Pengaturan;
 use App\Services\PendaftarService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
 
 class RegistrationController extends Controller
 {
@@ -28,7 +29,9 @@ class RegistrationController extends Controller
 
     public function getJurusan(): JsonResponse
     {
-        $jurusans = Jurusan::orderBy('nama_jurusan', 'asc')->get();
+        $jurusans = Cache::remember('daftar_jurusan', now()->addDay(), function () {
+            return Jurusan::orderBy('nama_jurusan', 'asc')->get()->toArray();
+        });
 
         return response()->json([
             'success' => true,

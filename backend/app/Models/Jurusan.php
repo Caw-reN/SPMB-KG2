@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 
 class Jurusan extends Model
 {
@@ -15,6 +16,17 @@ class Jurusan extends Model
         'kode_jurusan',
         'nama_jurusan',
     ];
+
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            Cache::forget('daftar_jurusan');
+        });
+
+        static::deleted(function () {
+            Cache::forget('daftar_jurusan');
+        });
+    }
 
     public function pendaftarJurusan1(): HasMany
     {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Carousel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -14,20 +15,27 @@ class CarouselController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Carousel::query();
-        if ($request->has('active_only')) {
-            $query->where('is_active', true);
-        }
+        $activeOnly = $request->boolean('active_only');
+        $cacheKey = $activeOnly ? 'carousels_active' : 'carousels_all';
+
+        $data = Cache::remember($cacheKey, now()->addDay(), function () use ($activeOnly) {
+            $query = Carousel::query();
+            if ($activeOnly) {
+                $query->where('is_active', true);
+            }
+            return $query->latest()->get()->toArray();
+        });
+
         return response()->json([
             'success' => true,
-            'data' => $query->latest()->get()
+            'data' => $data,
         ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|max:10240', // 10MB limit
+            'image' => 'required|image|max:5120', // 5MB limit
         ]);
 
         $file = $request->file('image');
