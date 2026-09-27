@@ -26,3 +26,5 @@ Thumbs.db
 *.local
 backend/test_*.php
 deployment.md
+backend/audit.md
+audit.md
