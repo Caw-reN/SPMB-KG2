@@ -26,6 +26,8 @@ const Carousel = ({ images = [] }) => {
     );
   }
 
+  const storageBaseUrl = import.meta.env.VITE_STORAGE_URL || 'http://localhost:8000/storage';
+
   return (
     <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg group">
       <div 
@@ -34,7 +36,7 @@ const Carousel = ({ images = [] }) => {
       >
         {images.map((item, idx) => (
           <div key={item.id || idx} className="min-w-full h-full flex-shrink-0">
-            <img src={`http://localhost:8000/storage/${item.image_path}`} alt={`Slide ${idx + 1}`} className="object-cover w-full h-full" />
+            <img src={`${storageBaseUrl}/${item.image_path}`} alt={`Slide ${idx + 1}`} className="object-cover w-full h-full" />
           </div>
         ))}
       </div>

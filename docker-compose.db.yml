@@ -1,0 +1,27 @@
+# Konfigurasi ini opsional jika Anda ingin menjalankan MySQL via Docker di VPS Database
+services:
+  database:
+    image: mysql:8.0
+    container_name: spmb_mysql
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password --bind-address=0.0.0.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-SecretRootPassword123!}
+      MYSQL_DATABASE: ${DB_DATABASE:-spmb_db}
+      MYSQL_USER: ${DB_USERNAME:-spmb_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-SecretUserPassword123!}
+    ports:
+      - "3306:3306"
+    volumes:
+      - spmb_mysql_data:/var/lib/mysql
+    networks:
+      - db_network
+
+volumes:
+  spmb_mysql_data:
+    name: spmb_mysql_data
+
+networks:
+  db_network:
+    name: db_network
+    driver: bridge

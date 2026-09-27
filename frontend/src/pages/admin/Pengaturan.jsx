@@ -347,10 +347,10 @@ const Pengaturan = () => {
                         <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow group">
                           <div 
                             className="aspect-video bg-gray-100 relative cursor-pointer"
-                            onClick={() => setModalImage(`http://localhost:8000/storage/${item.image_path}`)}
+                            onClick={() => setModalImage(`${import.meta.env.VITE_STORAGE_URL || 'http://localhost:8000/storage'}/${item.image_path}`)}
                           >
                             <img 
-                              src={`http://localhost:8000/storage/${item.image_path}`} 
+                              src={`${import.meta.env.VITE_STORAGE_URL || 'http://localhost:8000/storage'}/${item.image_path}`} 
                               alt="Carousel" 
                               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                             />

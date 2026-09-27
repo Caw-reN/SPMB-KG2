@@ -1,0 +1,40 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    container_name: spmb_backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    volumes:
+      - spmb_storage:/var/www/html/storage/app/public
+      - spmb_logs:/var/www/html/storage/logs
+    networks:
+      - spmb_network
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    container_name: spmb_web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - spmb_storage:/var/www/html/storage/app/public:ro
+    depends_on:
+      - backend
+    networks:
+      - spmb_network
+
+volumes:
+  spmb_storage:
+    name: spmb_storage
+  spmb_logs:
+    name: spmb_logs
+
+networks:
+  spmb_network:
+    name: spmb_network
+    driver: bridge

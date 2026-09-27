@@ -25,3 +25,4 @@ Thumbs.db
 .vscode/
 *.local
 backend/test_*.php
+deployment.md
