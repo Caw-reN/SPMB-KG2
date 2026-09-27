@@ -10,9 +10,10 @@ class PendaftarService
 {
     public function generateNoPendaftaran(): string
     {
-        $prefix = 'SPMBKG2-26';
+        $prefix = 'SPMBKG2-27';
         $lastPendaftar = Pendaftar::withTrashed()
             ->whereNotNull('no_pendaftaran')
+            ->where('no_pendaftaran', 'like', $prefix . '%')
             ->orderBy('id_pendaftar', 'desc')
             ->first();
 
@@ -37,7 +38,7 @@ class PendaftarService
 
     public function generateNoKwitansi(): string
     {
-        $prefix = 'KW-SPMB26-';
+        $prefix = 'KW-SPMB27-';
         
         $lastKwitansi = Pendaftar::withTrashed()
             ->whereNotNull('no_kwitansi')
