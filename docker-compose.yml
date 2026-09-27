@@ -22,6 +22,7 @@ services:
     ports:
       - "80:80"
     volumes:
+      - spmb_storage:/usr/share/nginx/html/storage:ro
       - spmb_storage:/var/www/html/storage/app/public:ro
     depends_on:
       - backend
