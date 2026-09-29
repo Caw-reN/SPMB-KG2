@@ -10,14 +10,14 @@ const AdminSidebar = ({ isOpen, setIsOpen }) => {
   const handleLogout = async (e) => {
     e.preventDefault();
     await logout();
-    navigate('/admin/login');
+    navigate('/mlebu/login');
   };
 
   const navItems = [
-    { to: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-    { to: '/admin/data-pendaftar', icon: Users, label: 'Data Pendaftar' },
-    { to: '/admin/cetak-kartu', icon: Printer, label: 'Cetak Kartu Ujian' },
-    { to: '/admin/pengaturan', icon: Settings, label: 'Pengaturan' },
+    { to: '/mlebu/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+    { to: '/mlebu/data-pendaftar', icon: Users, label: 'Data Pendaftar' },
+    { to: '/mlebu/cetak-kartu', icon: Printer, label: 'Cetak Kartu Ujian' },
+    { to: '/mlebu/pengaturan', icon: Settings, label: 'Pengaturan' },
   ];
 
   return (

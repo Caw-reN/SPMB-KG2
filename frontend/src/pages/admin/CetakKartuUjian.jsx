@@ -244,7 +244,7 @@ const CetakKartuUjian = () => {
                             <Eye className="w-5 h-5" />
                           </button>
                           <a 
-                            href={`/admin/print/kartu/${siswa.id_pendaftar}`}
+                            href={`/mlebu/print/kartu/${siswa.id_pendaftar}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="w-12 h-12 flex items-center justify-center rounded-lg bg-primary text-white shadow-lg hover:bg-green-800 hover:scale-105 transition-all" 

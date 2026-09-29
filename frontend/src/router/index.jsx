@@ -34,20 +34,20 @@ const router = createBrowserRouter([
 
   // Admin Login
   {
-    path: '/admin/login',
+    path: '/mlebu/login',
     element: <Login />,
   },
 
   // Admin Protected Routes
   {
-    path: '/admin',
+    path: '/mlebu',
     element: (
       <ProtectedRoute>
         <AdminLayout />
       </ProtectedRoute>
     ),
     children: [
-      { index: true, element: <Navigate to="/admin/dashboard" replace /> },
+      { index: true, element: <Navigate to="/mlebu/dashboard" replace /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'data-pendaftar', element: <DataPendaftar /> },
       { path: 'cetak-kartu', element: <CetakKartuUjian /> },
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
 
   // Direct Print Routes (Stand-alone without admin layout)
   {
-    path: '/admin/print/kwitansi/:id',
+    path: '/mlebu/print/kwitansi/:id',
     element: (
       <ProtectedRoute>
         <PrintKwitansi />
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: '/admin/print/kartu/:id',
+    path: '/mlebu/print/kartu/:id',
     element: (
       <ProtectedRoute>
         <PrintKartu />

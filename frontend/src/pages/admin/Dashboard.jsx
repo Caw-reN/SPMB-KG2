@@ -219,7 +219,7 @@ const Dashboard = () => {
             <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
               <div className="p-6 border-b border-gray-50 flex justify-between items-center bg-white">
                 <h3 className="text-lg font-bold text-gray-800">Pendaftar Terbaru</h3>
-                <Link to="/admin/data-pendaftar" className="text-sm font-semibold text-primary hover:text-green-700 transition-colors bg-green-50 px-4 py-2 rounded-full">
+                <Link to="/mlebu/data-pendaftar" className="text-sm font-semibold text-primary hover:text-green-700 transition-colors bg-green-50 px-4 py-2 rounded-full">
                   Lihat Semua
                 </Link>
               </div>

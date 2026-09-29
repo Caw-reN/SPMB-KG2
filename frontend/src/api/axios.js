@@ -26,10 +26,10 @@ api.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       // If unauthorized and on admin page, clear token and redirect
-      if (window.location.pathname.startsWith('/admin') && window.location.pathname !== '/admin/login') {
+      if (window.location.pathname.startsWith('/mlebu') && window.location.pathname !== '/mlebu/login') {
         localStorage.removeItem('admin_token');
         localStorage.removeItem('admin_user');
-        window.location.href = '/admin/login';
+        window.location.href = '/mlebu/login';
       }
     }
     return Promise.reject(error);

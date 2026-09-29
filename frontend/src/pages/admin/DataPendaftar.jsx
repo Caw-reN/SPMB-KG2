@@ -353,7 +353,7 @@ const DataPendaftar = () => {
                             ) : (
                               <div className="flex gap-2 w-full justify-between">
                                 <a 
-                                  href={`/admin/print/kwitansi/${row.id_pendaftar}`}
+                                  href={`/mlebu/print/kwitansi/${row.id_pendaftar}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="flex-1 flex justify-center items-center gap-1.5 bg-blue-100 text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-200 text-xs font-medium transition-colors"
@@ -436,7 +436,7 @@ const DataPendaftar = () => {
                             ) : (
                               <div className="flex gap-1">
                                 <a 
-                                  href={`/admin/print/kwitansi/${row.id_pendaftar}`}
+                                  href={`/mlebu/print/kwitansi/${row.id_pendaftar}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="flex items-center gap-1 bg-blue-100 text-blue-700 px-3 py-1 rounded hover:bg-blue-200 text-xs font-medium transition-colors"
