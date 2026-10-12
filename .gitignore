@@ -28,3 +28,28 @@ backend/test_*.php
 deployment.md
 backend/audit.md
 audit.md
+
+# Electron / IDE Cache & State
+/Cache/
+/CachedConfigurations/
+/CachedData/
+/CachedProfilesData/
+/Code Cache/
+/Crashpad/
+/DawnGraphiteCache/
+/DawnWebGPUCache/
+/GPUCache/
+/Local Storage/
+/Network/
+/Session Storage/
+/Shared Dictionary/
+/User/
+/blob_storage/
+/logs/
+/Backups/
+/Local State
+/Preferences
+/SharedStorage
+/DIPS
+/languagepacks.json
+/machineid
