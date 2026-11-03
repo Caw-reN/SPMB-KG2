@@ -11,16 +11,20 @@ class PendaftarService
     public function generateNoPendaftaran(): string
     {
         $prefix = 'SPMBKG2-27';
-        $lastPendaftar = Pendaftar::withTrashed()
+        $prefixLen = strlen($prefix);
+
+        // Cari nomor urut pendaftaran terbesar secara numerik
+        $maxNum = Pendaftar::withTrashed()
             ->whereNotNull('no_pendaftaran')
             ->where('no_pendaftaran', 'like', $prefix . '%')
-            ->orderBy('id_pendaftar', 'desc')
-            ->first();
+            ->selectRaw("MAX(CAST(SUBSTRING(no_pendaftaran, " . ($prefixLen + 1) . ") AS UNSIGNED)) as max_no")
+            ->value('max_no');
 
-        $nextNumber = 1;
-        if ($lastPendaftar && str_starts_with($lastPendaftar->no_pendaftaran, $prefix)) {
-            $lastNumPart = str_replace($prefix, '', $lastPendaftar->no_pendaftaran);
-            $nextNumber = ((int) $lastNumPart) + 1;
+        $nextNumber = ($maxNum !== null && $maxNum !== '') ? ((int) $maxNum + 1) : 1;
+
+        // Safety loop anti-collision
+        while (Pendaftar::withTrashed()->where('no_pendaftaran', $prefix . str_pad((string) $nextNumber, 3, '0', STR_PAD_LEFT))->exists()) {
+            $nextNumber++;
         }
 
         return $prefix . str_pad((string) $nextNumber, 3, '0', STR_PAD_LEFT);
@@ -39,17 +43,20 @@ class PendaftarService
     public function generateNoKwitansi(): string
     {
         $prefix = 'KW-SPMB27-';
-        
-        $lastKwitansi = Pendaftar::withTrashed()
+        $prefixLen = strlen($prefix);
+
+        // Ambil nomor kwitansi terbesar secara numerik (bukan berdasarkan id_pendaftar)
+        $maxNum = Pendaftar::withTrashed()
             ->whereNotNull('no_kwitansi')
             ->where('no_kwitansi', 'like', $prefix . '%')
-            ->orderBy('id_pendaftar', 'desc')
-            ->first();
+            ->selectRaw("MAX(CAST(SUBSTRING(no_kwitansi, " . ($prefixLen + 1) . ") AS UNSIGNED)) as max_no")
+            ->value('max_no');
 
-        $nextNumber = 1;
-        if ($lastKwitansi && str_starts_with($lastKwitansi->no_kwitansi, $prefix)) {
-            $lastNumPart = str_replace($prefix, '', $lastKwitansi->no_kwitansi);
-            $nextNumber = ((int) $lastNumPart) + 1;
+        $nextNumber = ($maxNum !== null && $maxNum !== '') ? ((int) $maxNum + 1) : 1;
+
+        // Safety loop anti-collision: pastikan nomor baru belum pernah terpakai
+        while (Pendaftar::withTrashed()->where('no_kwitansi', $prefix . str_pad((string) $nextNumber, 3, '0', STR_PAD_LEFT))->exists()) {
+            $nextNumber++;
         }
 
         return $prefix . str_pad((string) $nextNumber, 3, '0', STR_PAD_LEFT);
@@ -101,10 +108,8 @@ class PendaftarService
     public function approve(int $idPendaftar): ?Pendaftar
     {
         return \Illuminate\Support\Facades\DB::transaction(function () use ($idPendaftar) {
-            // Kunci tabel pengaturan untuk mencegah persetujuan (generate kwitansi) serentak
-            Pengaturan::lockForUpdate()->orderBy('id', 'desc')->first();
-
-            $pendaftar = Pendaftar::find($idPendaftar);
+            // Kunci baris pendaftar spesifik untuk mencegah persetujuan ganda secara bersamaan
+            $pendaftar = Pendaftar::lockForUpdate()->find($idPendaftar);
             if (!$pendaftar) {
                 return null;
             }

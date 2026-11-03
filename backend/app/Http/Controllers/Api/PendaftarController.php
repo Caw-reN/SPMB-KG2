@@ -155,6 +155,15 @@ class PendaftarController extends Controller
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 422);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("Error approve pendaftar ID {$id}: " . $e->getMessage(), [
+                'exception' => $e,
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal konfirmasi pendaftar: ' . $e->getMessage(),
+            ], 500);
         }
     }
 
