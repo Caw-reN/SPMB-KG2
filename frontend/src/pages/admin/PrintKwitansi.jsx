@@ -152,7 +152,7 @@ const PrintKwitansi = () => {
       `}</style>
 
       <div className="f4-page-wrapper">
-        <img src="/assets/img/background.png" alt="Bukti Pendaftaran" className="print-image" />
+        <img src="/assets/img/background.png?v=2728" alt="Bukti Pendaftaran" className="print-image" />
 
         <div className="data-container">
           <div id="data-no-daftar" className="data-overlay">{siswa.no_pendaftaran}</div>

@@ -130,7 +130,7 @@ const PrintKartu = () => {
       `}</style>
 
       <div className="card-container">
-        <img src="/assets/img/kartu_ujian.png" alt="Kartu Ujian" className="bg-card" />
+        <img src="/assets/img/kartu_ujian.png?v=2728" alt="Kartu Ujian" className="bg-card" />
 
         <div className="data-field no-formulir">{noKwitansi}</div>
         <div className="data-field gelombang">{data.gelombang || '1'}</div>
